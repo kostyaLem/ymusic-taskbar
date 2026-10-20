@@ -4,11 +4,7 @@ A free, unofficial mini player for the supported desktop music app, placed **ins
 
 [Русский](README.md) · [Usage guide (Russian)](USAGE.md) · [Download](https://github.com/kostyaLem/ymusic-taskbar/releases) · [MIT](LICENSE)
 
-<a href="assets/screenshots/taskbar.png"><img src="assets/screenshots/taskbar.png" alt="YMusic Taskbar on the left side of the Windows taskbar"></a>
-
-*The player inside the Windows taskbar. Click the screenshot to view it at full size.*
-
-<img src="assets/screenshots/player-real.png" width="425" alt="Close-up of YMusic Taskbar on the taskbar">
+<img src="assets/screenshots/player-full.png" width="540" alt="YMusic Taskbar — full mini player layout">
 
 ## Features
 
@@ -19,6 +15,16 @@ A free, unofficial mini player for the supported desktop music app, placed **ins
 - Independent side and layout preferences per display, with optional startup.
 
 Open **⋯ → Настройки…** (Settings), also available from the tray icon. The player follows free taskbar space and moves away from displays occupied by fullscreen apps. The current UI language is Russian.
+
+## On the Windows taskbar
+
+Compact layout:
+
+<a href="assets/screenshots/taskbar-compact.png"><img src="assets/screenshots/taskbar-compact.png" alt="Compact YMusic Taskbar next to app buttons on the Windows taskbar"></a>
+
+Full layout with seeking:
+
+<a href="assets/screenshots/taskbar-full.png"><img src="assets/screenshots/taskbar-full.png" alt="Full YMusic Taskbar with a seek bar on the Windows taskbar"></a>
 
 <details>
 <summary>Compact layout and settings</summary>

@@ -6,11 +6,7 @@
 
 [English](README.en.md) · [Инструкция](USAGE.md) · [Скачать](https://github.com/kostyaLem/ymusic-taskbar/releases) · [MIT](LICENSE)
 
-<a href="assets/screenshots/taskbar.png"><img src="assets/screenshots/taskbar.png" alt="YMusic Taskbar в левой части настоящей панели задач Windows"></a>
-
-*Плеер на панели задач Windows. Нажмите на снимок, чтобы открыть его в полном размере.*
-
-<img src="assets/screenshots/player-real.png" width="425" alt="Крупный план YMusic Taskbar на панели задач">
+<img src="assets/screenshots/player-full.png" width="540" alt="YMusic Taskbar — полный вид мини-плеера">
 
 ## Возможности
 
@@ -21,6 +17,16 @@
 - Свои сторона и вид плеера для каждого экрана, необязательный автозапуск.
 
 Все параметры находятся в **⋯ → Настройки…**. Это же окно открывается через значок в трее. Плеер подстраивается под свободное место и переносится с экрана, занятого полноэкранным приложением.
+
+## Примеры на панели задач
+
+Компактный режим:
+
+<a href="assets/screenshots/taskbar-compact.png"><img src="assets/screenshots/taskbar-compact.png" alt="Компактный YMusic Taskbar рядом с кнопками приложений на панели задач Windows"></a>
+
+Полный режим с перемоткой:
+
+<a href="assets/screenshots/taskbar-full.png"><img src="assets/screenshots/taskbar-full.png" alt="Полный YMusic Taskbar с дорожкой перемотки на панели задач Windows"></a>
 
 <details>
 <summary>Компактный режим и настройки</summary>
