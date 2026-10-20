@@ -44,7 +44,7 @@ internal static class LayoutScenarios
                 check(((System.Windows.Controls.TextBlock)dialog.FindName("ErrorText")).Text == "diagnostic test" && diagnosticButton.IsEnabled, "Diagnostic failure is displayed and button becomes available again");
                 var choice = (System.Windows.Controls.ComboBox)dialog.FindName("ThemeChoice");
                 choice.SelectedIndex = (int)ThemeMode.Dark;
-                check(settings.Theme == ThemeMode.Light && saved is null, "Settings edits remain isolated until save");
+                check(settings.Theme == ThemeMode.Light && saved is { Theme: ThemeMode.Dark }, "Settings edits apply immediately without mutating the opening snapshot");
                 check(((SolidColorBrush)dialog.Resources["PlayerText"]).Color.R > 200, "Settings theme preview updates immediately");
                 var selector = (System.Windows.Controls.ListBox)dialog.FindName("MonitorSelector");
                 var side = (System.Windows.Controls.ComboBox)dialog.FindName("SideChoice");
@@ -77,8 +77,9 @@ internal static class LayoutScenarios
                 var footer = (System.Windows.Controls.Grid)((System.Windows.Controls.Grid)dialog.Content).Children[2];
                 var buttons = (System.Windows.Controls.StackPanel)footer.Children[1];
                 ((System.Windows.Controls.Button)buttons.Children[1]).RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Button.ClickEvent));
-                check(saved is { Theme: ThemeMode.Dark } && launch && saved.Monitors["Screen A"].Compact && !saved.Monitors["Screen B"].Compact && !saved.Monitors["Screen C"].Enabled && saved.Monitors["Screen C"].Side == PlayerSide.Right, "Save submits theme, startup and independent monitor profiles");
+                check(saved is { Theme: ThemeMode.Dark } && launch && saved.Monitors["Screen A"].Compact && !saved.Monitors["Screen B"].Compact && !saved.Monitors["Screen C"].Enabled && saved.Monitors["Screen C"].Side == PlayerSide.Right, "OK retains immediately applied theme, startup and independent monitor profiles");
                 check(settings.Monitors.Count == 1 && settings.Monitors["Screen A"].Compact, "Editing clone does not mutate original profiles");
+                SettingsScenarios.Run(check);
                 ThemeService.Apply(window.Resources, ThemeMode.Light);
                 check(((SolidColorBrush)((System.Windows.Controls.TextBlock)window.FindName("Track")).Foreground).Color.R < 80, "Light player theme uses dark readable text");
                 check(((SolidColorBrush)((System.Windows.Shapes.Path)window.FindName("PlayIcon")).Fill).Color.R < 180, "Light accent is dark enough for a light taskbar");

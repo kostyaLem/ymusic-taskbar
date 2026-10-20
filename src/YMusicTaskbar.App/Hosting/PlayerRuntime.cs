@@ -79,7 +79,7 @@ internal sealed class PlayerRuntime : IDisposable
         settingsWindow = new SettingsWindow(settings, System.Windows.Forms.Screen.AllScreens.Select(s => s.DeviceName),
             System.Windows.Forms.Screen.PrimaryScreen?.DeviceName, startup.Enabled, (draft, launch) =>
             {
-                startup.SetEnabled(launch);
+                if (startup.Enabled != launch) startup.SetEnabled(launch);
                 store.Save(draft);
                 settings.Theme = draft.Theme; settings.PreferredMonitor = draft.PreferredMonitor;
                 settings.Compact = draft.Compact; settings.Monitors = draft.Monitors;
