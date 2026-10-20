@@ -22,6 +22,7 @@ internal sealed class PlayerRuntime : IDisposable
     private readonly Settings settings;
     private readonly PlayerViewModel viewModel;
     private PlayerWindow? window;
+    private ScreenCaptureMonitor? captureMonitor;
     private PlayerTray? tray;
     private SettingsWindow? settingsWindow;
     private DispatcherTimer? timer;
@@ -60,6 +61,9 @@ internal sealed class PlayerRuntime : IDisposable
             shutdown(0); return;
         }
         window = new(viewModel); window.SetCompact(settings.Compact);
+        captureMonitor = new ScreenCaptureMonitor();
+        captureMonitor.ForegroundChanged += (_, _) =>
+        { if (!stopping && captureMonitor.IsSelecting) window.Hide(); };
         window.Closed += (_, _) => { if (!stopping) shutdown(0); };
         tray = new(settings, Notifications, OpenSettings, desktop.OpenMusicWindow, () => shutdown(0));
         Notifications.Message += tray.Notify;
@@ -105,9 +109,19 @@ internal sealed class PlayerRuntime : IDisposable
             }
             viewModel.Refresh();
             if (window is not null && now >= nextTheme) { ThemeService.Apply(window.Resources, settings.Theme); nextTheme = now.AddSeconds(1); }
-            placement = musicRunning ? PlacementPlanner.ChooseForSettings(monitors.Current, settings, window?.CompactWidth ?? 360) : null;
-            if (placement is not null) { window?.SetCompact(settings.ProfileFor(placement.Monitor).Compact); window?.Place(placement); status = "Отображается"; }
-            else { window?.Hide(); status = musicRunning ? "Скрыто: полноэкранный режим или нет места" : "Ожидание запуска музыкального приложения"; }
+            // Snipping Tool already holds a frozen image of the player. Do not draw or move
+            // the live overlay above it, including onto another monitor during selection.
+            if (captureMonitor?.IsSelecting == true)
+            {
+                window?.Hide();
+                status = "Выбор области снимка экрана";
+            }
+            else
+            {
+                placement = musicRunning ? PlacementPlanner.ChooseForSettings(monitors.Current, settings, window?.CompactWidth ?? 360) : null;
+                if (placement is not null) { window?.SetCompact(settings.ProfileFor(placement.Monitor).Compact); window?.Place(placement); status = "Отображается"; }
+                else { window?.Hide(); status = musicRunning ? "Скрыто: полноэкранный режим или нет места" : "Ожидание запуска музыкального приложения"; }
+            }
             if (options.TestHost)
             {
                 if (File.Exists(Path.Combine(options.Output, "stop.txt"))) { shutdown(0); return; }
@@ -140,6 +154,6 @@ internal sealed class PlayerRuntime : IDisposable
         if (stopping) return;
         stopping = true; timer?.Stop(); audio.VolumeChanged -= OnVolumeChanged; audio.SessionsInvalidated -= OnSessionsInvalidated;
         if (tray is not null) { Notifications.Message -= tray.Notify; tray.Dispose(); }
-        settingsWindow?.Close(); media.Dispose(); audio.Dispose();
+        captureMonitor?.Dispose(); settingsWindow?.Close(); media.Dispose(); audio.Dispose();
     }
 }
