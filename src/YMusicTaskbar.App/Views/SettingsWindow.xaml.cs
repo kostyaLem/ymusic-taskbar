@@ -43,7 +43,7 @@ public partial class SettingsWindow : Window
         EnabledChoice.IsChecked = profile.Enabled;
         SideChoice.SelectedIndex = (int)profile.Side;
         LayoutChoice.SelectedIndex = profile.Compact ? 1 : 0;
-        System.Windows.Automation.AutomationProperties.SetName(SideChoice, "Сторона: " + tile.Id);
+        System.Windows.Automation.AutomationProperties.SetName(SideChoice, "Выравнивание: " + tile.Id);
         System.Windows.Automation.AutomationProperties.SetName(LayoutChoice, "Вид: " + tile.Id);
         loadingProfile = false;
     }
