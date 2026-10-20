@@ -4,9 +4,11 @@ A free, unofficial mini player for the supported desktop music app, placed **ins
 
 [Русский](README.md) · [Usage guide (Russian)](USAGE.md) · [Download](https://github.com/kostyaLem/ymusic-taskbar/releases) · [MIT](LICENSE)
 
-<img src="assets/screenshots/player-full.png" width="540" alt="Close-up of the mini player that sits inside the Windows taskbar">
+<a href="assets/screenshots/taskbar.png"><img src="assets/screenshots/taskbar.png" alt="YMusic Taskbar on the left side of the Windows taskbar"></a>
 
-*Player close-up. Its background is transparent and it fits into free taskbar space.*
+*The player inside the Windows taskbar. Click the screenshot to view it at full size.*
+
+<img src="assets/screenshots/player-real.png" width="425" alt="Close-up of YMusic Taskbar on the taskbar">
 
 ## Features
 

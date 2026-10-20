@@ -6,9 +6,11 @@
 
 [English](README.en.md) · [Инструкция](USAGE.md) · [Скачать](https://github.com/kostyaLem/ymusic-taskbar/releases) · [MIT](LICENSE)
 
-<img src="assets/screenshots/player-full.png" width="540" alt="Крупный план мини-плеера, который размещается на панели задач">
+<a href="assets/screenshots/taskbar.png"><img src="assets/screenshots/taskbar.png" alt="YMusic Taskbar в левой части настоящей панели задач Windows"></a>
 
-*Крупный план плеера. Его фон прозрачный; в приложении он занимает свободную область панели задач.*
+*Плеер на панели задач Windows. Нажмите на снимок, чтобы открыть его в полном размере.*
+
+<img src="assets/screenshots/player-real.png" width="425" alt="Крупный план YMusic Taskbar на панели задач">
 
 ## Возможности
 
