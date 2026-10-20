@@ -9,13 +9,13 @@
             <RowDefinition x:Name="SeekRow" Height="10" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30" />
+            <ColumnDefinition x:Name="ArtworkColumn" Width="40" />
             <ColumnDefinition x:Name="TextColumn" Width="*" />
             <ColumnDefinition Width="90" />
             <ColumnDefinition Width="96" />
             <ColumnDefinition Width="24" />
         </Grid.ColumnDefinitions>
-        <Border Width="28" Height="28" CornerRadius="4" ClipToBounds="True" Background="{DynamicResource PlayerSurface}" MouseLeftButtonUp="OpenMusic">
+        <Border x:Name="ArtworkFrame" Grid.RowSpan="2" Width="38" Height="38" VerticalAlignment="Top" CornerRadius="4" ClipToBounds="True" Background="{DynamicResource PlayerSurface}" MouseLeftButtonUp="OpenMusic">
             <Grid>
                 <TextBlock Text="♫" FontSize="20" Foreground="{DynamicResource PlayerAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Image x:Name="Cover" Source="{Binding Artwork, Converter={StaticResource Artwork}}" Stretch="UniformToFill" />

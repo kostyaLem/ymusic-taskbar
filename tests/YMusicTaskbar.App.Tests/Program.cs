@@ -65,4 +65,5 @@ StartupScenarios.Run(Check);
 SingleInstanceScenarios.Run(Check);
 LayoutScenarios.Run(Check);
 MediaIdentityScenarios.Run(Check);
+FullscreenScenarios.Run(Check);
 Console.WriteLine($"{count} application checks passed");

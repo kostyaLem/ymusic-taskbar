@@ -27,6 +27,9 @@ public partial class PlayerWindow : Window
     public void SetCompact(bool compact)
     {
         if (Position.Visibility == (compact ? Visibility.Collapsed : Visibility.Visible)) return;
+        ArtworkFrame.Width = ArtworkFrame.Height = compact ? 28 : 38;
+        ArtworkColumn.Width = new GridLength(compact ? 30 : 40);
+        ArtworkFrame.VerticalAlignment = compact ? VerticalAlignment.Center : VerticalAlignment.Top;
         CompactMetadata.Visibility = compact ? Visibility.Visible : Visibility.Collapsed;
         FullMetadata.Visibility = compact ? Visibility.Collapsed : Visibility.Visible;
         Position.Visibility = compact ? Visibility.Collapsed : Visibility.Visible;

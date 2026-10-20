@@ -23,7 +23,18 @@ public sealed class DesktopService : IDesktopService
             Native.GetWindowThreadProcessId(h, out uint pid);
             if (pid == Environment.ProcessId) return true;
             if (Native.DwmGetWindowAttribute(h, 14, out int cloaked, sizeof(int)) == 0 && cloaked != 0) return true;
-            if (Native.GetWindowRect(h, out var rect) && rect.Width > 0 && rect.Height > 0) fullscreen.Add(rect);
+            uint extendedStyle = unchecked((uint)Native.GetWindowLongPtr(h, -20).ToInt64());
+            byte? opacity = null; bool colorKeyed = false;
+            if ((extendedStyle & 0x00080000) != 0 && Native.GetLayeredWindowAttributes(h, out uint colorKey, out byte alpha, out uint flags))
+            {
+                if ((flags & 2) != 0) opacity = alpha;
+                colorKeyed = (flags & 1) != 0;
+            }
+            if (!FullscreenWindowPolicy.CanCoverDesktop(extendedStyle, opacity, colorKeyed)) return true;
+            // DWM bounds exclude invisible resize borders that can extend beyond a maximized window.
+            bool hasBounds = Native.DwmGetWindowRectAttribute(h, 9, out var rect, Marshal.SizeOf<Native.Rect>()) == 0;
+            if (!hasBounds) hasBounds = Native.GetWindowRect(h, out rect);
+            if (hasBounds && rect.Width > 0 && rect.Height > 0) fullscreen.Add(rect);
             return true;
         }, IntPtr.Zero);
         var result = new List<DesktopSlot>();
@@ -36,7 +47,7 @@ public sealed class DesktopService : IDesktopService
             if (bar != IntPtr.Zero) Native.GetWindowRect(bar, out taskbar);
             // A hidden auto-hide taskbar normally leaves a 1–2 pixel strip. Never float above it.
             bool visible = bar != IntPtr.Zero && taskbar.Width > taskbar.Height && Math.Min(taskbar.Bottom, bounds.Bottom) - Math.Max(taskbar.Top, bounds.Top) >= taskbar.Height - 4;
-            bool covered = fullscreen.Any(r => r.Left <= bounds.Left + 2 && r.Top <= bounds.Top + 2 && r.Right >= bounds.Right - 2 && r.Bottom >= bounds.Bottom - 2);
+            bool covered = fullscreen.Any(r => FullscreenWindowPolicy.CoversMonitor(new(r.Left, r.Top, r.Right, r.Bottom), new(bounds.Left, bounds.Top, bounds.Right, bounds.Bottom)));
             var occupied = new List<Span>(); string? error = null;
             if (visible)
             {
