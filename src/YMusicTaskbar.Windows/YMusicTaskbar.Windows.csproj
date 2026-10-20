@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+        <WindowsSdkPackageVersion>10.0.19041.57</WindowsSdkPackageVersion>
+        <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="../YMusicTaskbar.Core/YMusicTaskbar.Core.csproj" />
+    </ItemGroup>
+</Project>

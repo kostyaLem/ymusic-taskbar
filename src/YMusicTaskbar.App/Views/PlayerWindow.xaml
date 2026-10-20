@@ -1,0 +1,99 @@
+<Window x:Class="YMusicTaskbar.PlayerWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:YMusicTaskbar" Title="YMusic Taskbar" Width="540" Height="46" WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False" ShowActivated="False" Topmost="True" AllowsTransparency="True" Background="Transparent" UseLayoutRounding="True" Icon="/YMusicTaskbar;component/Assets/app.ico">
+    <Window.Resources>
+<ResourceDictionary><ResourceDictionary.MergedDictionaries><ResourceDictionary Source="/YMusicTaskbar;component/Views/ThemePalette.xaml" /></ResourceDictionary.MergedDictionaries>
+        <local:ArtworkConverter x:Key="Artwork" />
+    </ResourceDictionary></Window.Resources>
+    <Grid x:Name="Layout" Margin="5,2" Background="#01000000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition x:Name="SeekRow" Height="10" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition x:Name="TextColumn" Width="*" />
+            <ColumnDefinition Width="90" />
+            <ColumnDefinition Width="96" />
+            <ColumnDefinition Width="24" />
+        </Grid.ColumnDefinitions>
+        <Border Width="28" Height="28" CornerRadius="4" ClipToBounds="True" Background="{DynamicResource PlayerSurface}" MouseLeftButtonUp="OpenMusic">
+            <Grid>
+                <TextBlock Text="♫" FontSize="20" Foreground="{DynamicResource PlayerAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Image x:Name="Cover" Source="{Binding Artwork, Converter={StaticResource Artwork}}" Stretch="UniformToFill" />
+            </Grid>
+        </Border>
+        <Grid Grid.Column="1" Margin="8,0" VerticalAlignment="Center">
+            <StackPanel x:Name="CompactMetadata" Visibility="Collapsed">
+            <TextBlock x:Name="Track" Foreground="{DynamicResource PlayerText}" FontSize="11.5" FontWeight="Medium" TextTrimming="CharacterEllipsis" Text="{Binding Title}" />
+            <TextBlock x:Name="Artist" Text="{Binding Artist}" Foreground="{DynamicResource PlayerSecondary}" FontSize="10" TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+            <TextBlock x:Name="FullMetadata" Foreground="{DynamicResource PlayerText}" FontSize="12.5" FontWeight="Medium" LineHeight="14" LineStackingStrategy="BlockLineHeight" MaxHeight="30" TextWrapping="Wrap" TextTrimming="CharacterEllipsis">
+                <TextBlock.Text><MultiBinding StringFormat="{}{0} — {1}" Mode="OneWay"><Binding Path="Title"/><Binding Path="Artist"/></MultiBinding></TextBlock.Text>
+            </TextBlock>
+        </Grid>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <Button x:Name="Previous" Command="{Binding Previous}" AutomationProperties.Name="Предыдущий трек">
+                <Path Data="M 1,1 L 1,11 M 12,1 L 4,6 12,11 Z" Stroke="{DynamicResource PlayerText}" StrokeThickness="1.3" StrokeLineJoin="Round" Width="13" Height="12" />
+            </Button>
+            <Button x:Name="PlayPause" Command="{Binding PlayPause}" AutomationProperties.Name="Воспроизведение / пауза">
+                <Path x:Name="PlayIcon" Fill="{DynamicResource PlayerAccent}" Width="14" Height="14">
+                    <Path.Style>
+                        <Style TargetType="Path">
+                            <Setter Property="Data" Value="M 3,1 L 13,7 3,13 Z" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Playing}" Value="True">
+                                    <Setter Property="Data" Value="M 2,0 L 5,0 5,14 2,14 Z M 10,0 L 13,0 13,14 10,14 Z" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+            </Button>
+            <Button x:Name="Next" Command="{Binding Next}" AutomationProperties.Name="Следующий трек">
+                <Path Data="M 12,1 L 12,11 M 1,1 L 9,6 1,11 Z" Stroke="{DynamicResource PlayerText}" StrokeThickness="1.3" StrokeLineJoin="Round" Width="13" Height="12" />
+            </Button>
+        </StackPanel>
+        <Grid Grid.Column="3" Margin="3,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="26" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Mute" Width="26" Command="{Binding ToggleMute}" AutomationProperties.Name="Выключить / включить звук музыкального приложения">
+                <Grid Width="17" Height="16">
+                    <Path Data="M 1,5 L 4,5 8,2 8,14 4,11 1,11 Z" Stroke="{DynamicResource PlayerText}" StrokeThickness="1.2" StrokeLineJoin="Round" />
+                    <Path x:Name="SpeakerWave" Data="M 11,4 Q 15,8 11,12" Stroke="{DynamicResource PlayerText}" StrokeThickness="1.2">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Muted}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Volume}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                    <Path x:Name="MuteMark" Data="M 11,5 L 16,11 M 16,5 L 11,11" Stroke="{DynamicResource PlayerAccent}" StrokeThickness="1.4">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Muted}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Volume}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                </Grid>
+            </Button>
+            <local:Scrubber x:Name="Volume" Grid.Column="1" Height="22" VerticalAlignment="Center" Maximum="100" Value="{Binding Volume, Mode=OneWay}" IsEnabled="{Binding AudioAvailable}" AutomationProperties.AutomationId="Volume" AutomationProperties.Name="Громкость музыкального приложения" />
+        </Grid>
+        <Button x:Name="More" Grid.Column="4" Content="⋯" Width="24" Command="{Binding ShowMenu}" AutomationProperties.Name="Настройки и выход" />
+        <local:Scrubber x:Name="Position" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" Height="10" Margin="3,0,3,0" Maximum="{Binding Duration}" Value="{Binding Position, Mode=OneWay}" IsEnabled="{Binding CanSeek}" Step="5" AutomationProperties.AutomationId="Position" AutomationProperties.Name="Позиция трека" />
+    </Grid>
+</Window>

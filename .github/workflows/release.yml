@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build, test and package
+        shell: pwsh
+        run: ./build.ps1 -Installer -BootstrapCompiler
+      - name: Verify installer lifecycle
+        shell: pwsh
+        run: ./scripts/Test-Installer.ps1
+      - name: Publish release files
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          $version = ([xml](Get-Content Directory.Build.props -Raw)).Project.PropertyGroup.Version
+          if ($env:RELEASE_TAG -ne "v$version") { throw 'Tag and project version must match.' }
+          gh release create $env:RELEASE_TAG (Get-ChildItem dist -File).FullName --title "YMusic Taskbar $version" --generate-notes

@@ -1,0 +1,8 @@
+{
+  "name": "ymusic-taskbar",
+  "description": "YMusic Taskbar — неофициальный мини-плеер для Windows 10 / 11: треки, перемотка и громкость в панели задач.",
+  "topics": [
+    "music-player", "ymusic", "mini-player", "taskbar", "windows-10", "windows-11",
+    "windows", "desktop", "media-controls", "smtc", "core-audio", "wpf", "dotnet", "csharp"
+  ]
+}

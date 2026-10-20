@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+        <WindowsSdkPackageVersion>10.0.19041.57</WindowsSdkPackageVersion>
+        <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <ApplicationIcon>../../assets/app.ico</ApplicationIcon>
+        <AssemblyName>YMusicTaskbar</AssemblyName>
+        <RootNamespace>YMusicTaskbar</RootNamespace>
+        <AssemblyTitle>YMusic Taskbar</AssemblyTitle>
+        <PublishTrimmed>false</PublishTrimmed>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="../YMusicTaskbar.Core/YMusicTaskbar.Core.csproj" />
+        <ProjectReference Include="../YMusicTaskbar.Windows/YMusicTaskbar.Windows.csproj" />
+        <Resource Include="../../assets/app.ico" Link="Assets/app.ico" />
+        <EmbeddedResource Include="../../assets/app.ico" LogicalName="YMusicTaskbar.AppIcon" />
+    </ItemGroup>
+</Project>

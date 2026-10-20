@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="src/YMusicTaskbar.Core/YMusicTaskbar.Core.csproj" />
+  <Project Path="src/YMusicTaskbar.Windows/YMusicTaskbar.Windows.csproj" />
+  <Project Path="src/YMusicTaskbar.App/YMusicTaskbar.App.csproj" />
+  <Project Path="tests/YMusicTaskbar.Core.Tests/YMusicTaskbar.Core.Tests.csproj" />
+  <Project Path="tests/YMusicTaskbar.Windows.Tests/YMusicTaskbar.Windows.Tests.csproj" />
+  <Project Path="tests/YMusicTaskbar.App.Tests/YMusicTaskbar.App.Tests.csproj" />
+</Solution>

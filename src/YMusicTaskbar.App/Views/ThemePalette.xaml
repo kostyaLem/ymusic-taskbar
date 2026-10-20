@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="PlayerText" Color="#F4F4F5"/>
+    <SolidColorBrush x:Key="PlayerSecondary" Color="#BCBCC5"/>
+    <SolidColorBrush x:Key="PlayerAccent" Color="#FFD641"/>
+    <SolidColorBrush x:Key="PlayerSurface" Color="#202026"/>
+    <SolidColorBrush x:Key="PlayerBorder" Color="#3A3A44"/>
+    <SolidColorBrush x:Key="PlayerHover" Color="#34343E"/>
+    <SolidColorBrush x:Key="PlayerPressed" Color="#454552"/>
+    <SolidColorBrush x:Key="PlayerRail" Color="#666670"/>
+</ResourceDictionary>
